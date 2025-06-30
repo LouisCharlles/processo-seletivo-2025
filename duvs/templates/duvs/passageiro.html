@@ -1,0 +1,33 @@
+{% extends "global/base.html" %}
+{% block content %}
+<div class="passageiro-header">
+        <h1 class="single-passageiro-title">Detalhes do Passageiro</h1>
+        
+        <div class="passageiro-links">
+            <a class="btn btn-link" href="{% url 'duvs:passageiro_update' passageiro.id %}">Editar Passageiro</a>
+
+            <form action="{% url 'duvs:passageiro_delete' passageiro.id %}" method="POST">
+                {% csrf_token %}
+
+                {% if confirmation == 'no' %}
+                    <input type="hidden" name="confirmation" value="yes">
+                    <button class="btn btn-link btn-delete" type="submit">Você tem certeza?</button>
+                {% else %}
+                    <button class="btn btn-link btn-delete" type="submit">Excluir Passageiro</button>
+                {% endif %}
+            </form>
+      </div>
+</div>
+<div class="single-passageiro">
+    <img src="{{ passageiro.foto.url }}" alt="Foto de {{ passageiro.nome }}" class="passageiro-detail-image">
+    <div class="passageiro-info">
+        <h2>{{ passageiro.nome }}</h2>
+        <p><b>Tipo:</b> {{ passageiro.tipo|capfirst }}</p>
+        <p><b>Nacionalidade:</b> {{ passageiro.nacionalidade }}</p>
+        {% if passageiro.sid %}
+            <p><b>SID:</b> {{ passageiro.sid }}</p>
+        {% endif %}
+        <p><b>DUV:</b> <a href="{% url 'duvs:duv_detail' passageiro.duv.id %}">{{ passageiro.duv.numero }}</a></p>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Resultados para "{{ search_value }}"</h1>
+
+<div class="responsive-table">
+    <table>
+        <caption class="table-caption">
+            Passageiros encontrados
+        </caption>
+        <thead>
+            <tr class="table-row table-row-header">
+                <th class="table-header">ID</th>
+                <th class="table-header">Nome</th>
+                <th class="table-header">Tipo</th>
+                <th class="table-header">Nacionalidade</th>
+            </tr>
+        </thead>
+        <tbody id="passageiro-list">
+            {% for passageiro in page_obj %}
+                <tr class="passageiro-item">
+                    <td class="table-cel">
+                        <a href="{% url 'duvs:passageiro_detail' passageiro.id %}" class="table-link">
+                            {{ passageiro.id }}
+                        </a>
+                    </td>
+                    <td class="table-cel">{{ passageiro.nome }}</td>
+                    <td class="table-cel">{{ passageiro.tipo|capfirst }}</td>
+                    <td class="table-cel">{{ passageiro.nacionalidade }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

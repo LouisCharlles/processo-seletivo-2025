@@ -1,0 +1,67 @@
+{% extends "global/base.html" %}
+{% block content %}
+<div class="single-duv">
+    <div class="duv-header">
+        <h1 class="single-duv-number">
+            {{duv.numero}}
+        </h1>
+        <div class="duvs-links">
+            <a class="btn btn-link" href="{% url 'duvs:duv_update' duv.id %}">Editar Duv</a>
+
+            <form action="{% url 'duvs:duv_delete' duv.id %}" method="POST">
+                {% csrf_token %}
+
+                {% if confirmation == 'no' %}
+                    <input type="hidden" name="confirmation" value="yes">
+                    <button class="btn btn-link btn-delete" type="submit">Você tem certeza?</button>
+                {% else %}
+                    <button class="btn btn-link btn-delete" type="submit">Excluir Duv</button>
+                {% endif %}
+            </form>
+      </div>
+    </div>
+    <p>
+        <a href="{% url 'duvs:passageiro_create' %}?duv={{ duv.id }}" class="btn">
+            Adicionar Passageiro/Tripulante
+        </a>
+    </p>
+    <p><b>ID: </b>{{duv.id}}</p>
+    <p><b>Data da Viagem: </b>{{duv.data_viagem}}</p>
+    <div class="informacoes-do-navio">
+        <h2>Informações do Navio</h2>
+        <img src="{{ duv.navio.imagem.url }}" alt="Imagem do Navio" class="navio-image">
+        <p><b>ID do navio: </b><a href="{% url 'duvs:navio_detail' duv.navio.id %}">{{duv.navio.id}}</a></p>
+        <p><b>Navio: </b>{{duv.navio.nome}}</p>
+        <p><b>Bandeira: </b>{{duv.navio.bandeira}}</p>
+    </div>
+    <div class="responsive-table">
+        <table>
+            <caption class="table-caption">
+                Passageiros e Tripulantes da {{ duv.numero }}
+            </caption>
+            <thead>
+                <tr class="table-row table-row-header">
+                    <th class="table-header">ID</th>
+                    <th class="table-header">Nome</th>
+                    <th class="table-header">Tipo</th>
+                    <th class="table-header">Nacionalidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pessoa in duv.passageiros.all %}
+                    <tr class="table-row">
+                        <td class="table-cel">
+                            <a href="{% url 'duvs:passageiro_detail' pessoa.id %}" class="table-link">
+                                {{ pessoa.id }}
+                            </a>
+                        </td>
+                        <td class="table-cel">{{ pessoa.nome }}</td>
+                        <td class="table-cel">{{ pessoa.tipo|capfirst }}</td>
+                        <td class="table-cel">{{ pessoa.nacionalidade }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

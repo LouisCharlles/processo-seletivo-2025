@@ -1,0 +1,28 @@
+{% load static %}
+<header class="header">
+    <h1 class="header-heading">
+        <a href="{% url 'duvs:home' %}" class="header-link">Duvs</a>
+    </h1>
+    <nav class="menu">
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="{% url 'duvs:duv_create' %}" class="menu-link">Registrar DUV</a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'duvs:passageiro_create' %}" class="menu-link">Registrar Passageiro</a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'duvs:navio_create' %}" class="menu-link">Registrar Navio</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="search">
+        <form id="search-form" method="get">
+            <select id="search-type" class="search-input" style="width:auto;">
+                <option value="{% url 'duvs:search' %}">DUVs</option>
+                <option value="{% url 'duvs:passageiro_search' %}">Passageiros</option>
+            </select>
+            <input type="text" class="search-input" name="q" placeholder="Buscar DUVs ou Passageiros">
+        </form>
+</div>
+</header>

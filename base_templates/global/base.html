@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+{% include "global/partials/_head.html" %}
+<body>
+    {% include "global/partials/_header.html" %}
+    {% if messages %}
+        {% include "global/partials/_message.html" %}
+    {% endif %}
+    <main class="content">
+        {% block content %}
+        
+        {% endblock content %}
+    </main>
+    {% include "global/partials/_pagination.html" %}
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let select = document.getElementById('search-type');
+            let action = select.value;
+            let query = this.querySelector('input[name="q"]').value;
+
+            if (query.trim() === "") {
+                return; // não busca vazio
+            }
+
+            window.location.href = `${action}?q=${encodeURIComponent(query)}`;
+        });
+    </script>
+</body>
+</html>

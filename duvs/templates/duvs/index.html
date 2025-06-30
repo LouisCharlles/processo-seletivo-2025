@@ -1,0 +1,46 @@
+{% extends "global/base.html" %}
+{% block content %}
+    {% if page_obj %}
+        <div class="responsive-table">
+            <table>
+                <caption class="table-caption">
+                    Lista de DUVs
+                </caption>
+                <thead>
+                    <tr class="table-row table-row-header">
+                        <th class="table-header">ID</th>
+                        <th class="table-header">Número</th>
+                        <th class="table-header">Data da Viagem</th>
+                        <th class="table-header">Navio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for duv in page_obj %}
+                        <tr class="table-row">
+                            <td class="table-cel">
+                                <a href="{% url "duvs:duv_detail" duv.id %}" class="table-link">
+                                    {{duv.id}}
+                                </a>
+                            </td>
+                            <td class="table-cel">
+                                {{duv.numero}}
+                            </td>
+                            <td class="table-cel">
+                                {{ duv.data_viagem|date:"d/m/Y" }}
+                            </td>
+                            <td class="table-cel">
+                                {{ duv.navio.nome }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+        </div>
+        {% else %}
+            <div class="single-duv">
+                <h1 class="single-duv-name">
+                    Nenhuma DUV cadastrada ainda.
+                </h1>
+            </div>
+    {% endif %}
+{% endblock content %}
