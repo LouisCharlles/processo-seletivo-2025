@@ -34,7 +34,7 @@ def passageiro_update(request, passageiro_id):
     passageiro = get_object_or_404(Passageiro, pk=passageiro_id)
     form_action = reverse("duvs:passageiro_update", args=[passageiro.pk])
     if request.method == 'POST':
-        form = PassageiroForm(request.POST, instance=passageiro)
+        form = PassageiroForm(request.POST, request.FILES,instance=passageiro)
         context = {
             'form': form,
             "form_action": form_action,
